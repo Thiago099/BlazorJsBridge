@@ -66,12 +66,18 @@ Calls a public non static method of your component decorated by [JSInvokable]
 
 parameters:
 - rawPath: 
-- The path is case sensitive and should be defined like this:
-- ComponentName/MethodName
 
-- or this if you have an optional key
 
-- ComponentName/OptionalKey/MethodName
+The path is case sensitive and should be defined like this:
+
+
+ComponentName/MethodName
+
+
+or this if you have an optional key
+
+
+ComponentName/OptionalKey/MethodName
 
 ```js
 CallBlazor("ComponentName/OptionalKey/MethodName", ...parameters)
