@@ -28,8 +28,8 @@ Note for the import command to work your script must be of module type, example
 This function will ensure that your code will be executed only once
 
 Parameters:
-callback: A function to be executed
-key (optional): If you want the function to be executed again you can pass a different key
+- callback: A function to be executed
+- key (optional): If you want the function to be executed again you can pass a different key
 
 ```js
 Singleton(()=>{
@@ -65,12 +65,11 @@ public async Task MethodName()
 Calls a public non static method of your component decorated by [JSInvokable]
 
 parameters:
-rawPath: 
-
+- rawPath: 
 The path is case sensitive and should be defined like this:
 ComponentName/MethodName
 
-or this if you have an optional key
+- or this if you have an optional key
 
 ComponentName/OptionalKey/MethodName
 
@@ -84,8 +83,8 @@ Register a method to be callable by the IJSRuntime, example:
 await JS.InvokeVoidAsync("MyMethod", "parameter 1", 2) ;
 ```
 
-Name: Name of the method 
-Method: The implementation of the method
+- Name: Name of the method 
+- Method: The implementation of the method
 
 ```js
 RegisterOnBlazor("MyMethod", (parameter1, parameter2)=>{})
