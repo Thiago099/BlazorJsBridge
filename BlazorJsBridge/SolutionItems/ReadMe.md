@@ -25,7 +25,7 @@ Note for the import command to work your script must be of module type, example
 
 ## Methods
 
-This function will ensure that your code will be executed only once
+### This function will ensure that your code will be executed only once
 
 Parameters:
 - callback: A function to be executed
@@ -62,7 +62,7 @@ public async Task MethodName()
 }
 ```
 
-Calls a public non static method of your component decorated by [JSInvokable]
+### Calls a public non static method of your component decorated by [JSInvokable]
 
 parameters:
 - rawPath: 
@@ -83,7 +83,7 @@ ComponentName/OptionalKey/MethodName
 CallBlazor("ComponentName/OptionalKey/MethodName", ...parameters)
 ```
 
-Register a method to be callable by the IJSRuntime, example:
+### Register a method to be callable by the IJSRuntime, example:
 
 ```csharp
 await JS.InvokeVoidAsync("MyMethod", "parameter 1", 2) ;
