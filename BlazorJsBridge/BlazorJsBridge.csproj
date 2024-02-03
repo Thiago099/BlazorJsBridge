@@ -7,8 +7,12 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>Blazor Js Bridge</Title>
     <Description>This is a small library i made to make it easier to use blazor alongside with javascript</Description>
-    <Copyright>MIT License</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>SolutionItems/ReadMe.md</PackageReadmeFile>
+    <PackageProjectUrl>https://github.com/Thiago099/BlazorJsBridge/blob/main/BlazorJsBridge/SolutionItems/ReadMe.md</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Thiago099/BlazorJsBridge.git</RepositoryUrl>
+    <PackageTags>blazor;javascript</PackageTags>
+    <AssemblyVersion>1.0.0</AssemblyVersion>
   </PropertyGroup>
 
 

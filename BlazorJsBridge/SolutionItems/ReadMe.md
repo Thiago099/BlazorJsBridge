@@ -4,9 +4,9 @@ This is a simple library I made that allows blazor to be better used alongside j
 
 ## Features
 
-- Non Static javascript interrupt function calling
-- Wrapper for creating blazor accessible javascript function
-- A singleton class that ensures your javascript function is called only once during the component lifecycle
+- Non Static javascript inerop function calling
+- Wrapper for creating blazor accessible javascript functions
+- A singleton function that ensures your javascript function is called only once during the component lifecycle
 
 ## Usage
 
@@ -14,13 +14,12 @@ You can import one or more javascript functions from this library like this on y
 
 ```js
 import { CallBlazor, Singleton, RegisterOnBlazor } from "/blazor-js-bridge.js" 
-
 ```
 
 Note for the import command to work your script must be of module type, example
 
 ```html
-<script type="module" src="Home/Main.js"></script>
+<script type="module" src="main.js"></script>
 ```
 
 ## Methods
@@ -35,6 +34,8 @@ Parameters:
 Singleton(()=>{
 })
 ```
+
+### Calls a public non static method of your component decorated by [JSInvokable]
 
 For the following method to work, you must register your component for usage on the javascript
 
@@ -62,10 +63,8 @@ public async Task MethodName()
 }
 ```
 
-### Calls a public non static method of your component decorated by [JSInvokable]
-
-parameters:
-- rawPath: 
+Parameters:
+- path: 
 
 
 The path is case sensitive and should be defined like this:
@@ -83,15 +82,19 @@ ComponentName/OptionalKey/MethodName
 CallBlazor("ComponentName/OptionalKey/MethodName", ...parameters)
 ```
 
-### Register a method to be callable by the IJSRuntime, example:
+### Register a blazor callable method
 
-```csharp
-await JS.InvokeVoidAsync("MyMethod", "parameter 1", 2) ;
-```
+Parameters:
 
 - Name: Name of the method 
 - Method: The implementation of the method
 
 ```js
 RegisterOnBlazor("MyMethod", (parameter1, parameter2)=>{})
+```
+
+#### Example of calling this method
+
+```csharp
+await JS.InvokeVoidAsync("MyMethod", "parameter 1", 2) ;
 ```
