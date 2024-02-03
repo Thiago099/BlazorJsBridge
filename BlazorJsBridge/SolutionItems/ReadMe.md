@@ -5,7 +5,7 @@ This is a simple library I made that allows blazor to be better used alongside j
 ## Features
 
 - Non Static javascript interrupt function calling
-- Wrapped javascript global function creation to be used in type module script
+- Wrapper for creating blazor accessible javascript function
 - A singleton class that ensures your javascript function is called only once during the component lifecycle
 
 ## Usage
