@@ -13,7 +13,7 @@ This is a simple library I made that allows blazor to be better used alongside j
 You can import one or more javascript functions from this library like this on your javascript files
 
 ```js
-import { CallBlazor, Singleton, RegisterOnBlazor } from "/blazor-js-bridge.js" 
+import { AcceptBlazorRegistration, RegisterOnBlazor } from "/blazor-js-bridge.js"
 ```
 
 Note for the import command to work your script must be of module type, example
@@ -24,18 +24,7 @@ Note for the import command to work your script must be of module type, example
 
 ## Methods
 
-### This function will ensure that your code will be executed only once
-
-Parameters:
-- callback: A function to be executed
-- key (optional): If you want the function to be executed again you can pass a different key
-
-```js
-Singleton(()=>{
-})
-```
-
-### Calls a public non static method of your component decorated by [JSInvokable]
+### You can access your non static methods in javascript using the following function
 
 For the following method to work, you must register your component for usage on the javascript
 
@@ -47,7 +36,7 @@ protected override async Task OnAfterRenderAsync(bool firstRender)
 {
     if (firstRender)
     {
-        await JS.RegisterOnJS(this,"OptionalKey");
+        await JS.RegisterOnJS(this);
     }
 }
 ```
@@ -56,30 +45,21 @@ Your invocable method should look like this
 
 ```csharp
 [JSInvokable]
-public async Task MethodName()
+public async Task MethodName(string parameter)
 {
     // YOUR CODE HERE
     await InvokeAsync(StateHasChanged); // If your method changes the state of your application
 }
 ```
 
-Parameters:
-- path: 
+The first parameter of AcceptBlazorRegistration, must be your component name, and it is case sensitive.
 
-
-The path is case sensitive and should be defined like this:
-
-
-ComponentName/MethodName
-
-
-or this if you have an optional key
-
-
-ComponentName/OptionalKey/MethodName
+You can call methods that are public and [JSInvokable] directally from this parameter, they are also case sensitive
 
 ```js
-CallBlazor("ComponentName/OptionalKey/MethodName", ...parameters)
+AcceptBlazorRegistration(Home => {
+    Home.MethodName("hello")
+}
 ```
 
 ### Register a blazor callable method
@@ -97,4 +77,18 @@ RegisterOnBlazor("MyMethod", (parameter1, parameter2)=>{})
 
 ```csharp
 await JS.InvokeVoidAsync("MyMethod", "parameter 1", 2) ;
+```
+
+
+### This function will ensure that your code will be executed only once
+
+note that AcceptBlazorRegistration, already call this method, so you don't need to use this alongside it
+
+Parameters:
+- callback: A function to be executed
+- key (optional): If you want the function to be executed again you can pass a different key
+
+```js
+Singleton(()=>{
+})
 ```

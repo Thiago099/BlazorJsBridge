@@ -1,1 +1,0 @@
-../BlazorJsBridge/SolutionItems/ReadMe.md

@@ -1,41 +1,8 @@
-export { CallBlazor, RegisterOnBlazor, Singleton }
-
-
-let components = {};
-
-function CallBlazor(rawPath, ...parameters) {
-
-    const path = rawPath.split("/")
-
-    let container = null
-    let methodName = null
-
-    if (path.length == 2) {
-        let componentName;
-
-        [componentName, methodName] = path
-
-        container = components[componentName]?.default
-
-    } else if (path.length == 3) {
-
-        let componentName, componentKey;
-
-        [componentName, componentKey, methodName] = path
-
-        container = components[componentName]?.instances[componentKey]
-    }
-
-    if (container != null) {
-        return container.invokeMethodAsync(methodName, ...parameters)
-    }
-
-    console.error(`Failed to call "${rawPath}" because it was not registred`)
-}
+export { AcceptBlazorRegistration, RegisterOnBlazor, Singleton }
 
 const singletonCallbacks = new Set()
-function Singleton(callback, key) {
-    const stringCallback = callback.toString() + key
+function Singleton(callback, key = "") {
+    const stringCallback = callback.toString()+"-"+key
     if (!singletonCallbacks.has(stringCallback)) {
         singletonCallbacks.add(stringCallback)
         callback()
@@ -46,17 +13,26 @@ function RegisterOnBlazor(name, method) {
     window[name] = method
 }
 
+function AcceptBlazorRegistration(callback) {
 
-RegisterOnBlazor("RegisterOnJS", (newComponent, name, key) => {
+    const componentName = GetFunctionFirstParameterName(callback)
 
-    if (components[name] == null) {
-        components[name] = { instances: {} }
-    }
+    Singleton(() => {
 
-    if (key == null) {
-        components[name].default = newComponent
-    }
-    else {
-        components[name].instances[key] = newComponent
-    }
-})
+        RegisterOnBlazor("RegisterOnJS-" + componentName, container => {
+            callback(new Proxy({} , {
+                get(target, property) {
+                    return (...parameters) => container.invokeMethodAsync(property, ...parameters)
+                }
+            }))
+        })
+
+    }, componentName)
+}
+
+function GetFunctionFirstParameterName(fn) {
+    var exp = /^\s*function\s+\w+\s*\((\w*?)[\),]|^(\s*\(){0,1}\s*(\w+)\s*(=>|,|\))/gi
+    var match = exp.exec(fn.toString());
+
+    return match[1] ?? match[3]
+}

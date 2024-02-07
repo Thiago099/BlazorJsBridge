@@ -1,0 +1,9 @@
+<Project>
+  <Target Name="CopyFilesToProject" BeforeTargets="Build">
+    <Message Text="Copy files to project" />
+    <ItemGroup>
+      <SourceScripts Include="$(MSBuildThisFileDirectory)..\wwwroot\**\*.* "/>
+    </ItemGroup>
+    <Copy SourceFiles="@(SourceScripts)" DestinationFiles="@(SourceScripts -> '$(MSBuildProjectDirectory)\wwwroot\%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
+</Project>
